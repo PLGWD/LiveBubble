@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Control</title>
+<style>body{margin:0;background:#222;color:#fff;font-family:Arial;display:flex;justify-content:center;align-items:center;height:100vh}input{width:900px;font-size:30px;padding:16px;border-radius:14px;border:0}</style>
+</head><body><input id="t" autofocus placeholder="Schreiben und Enter...">
+<script>
+const i=document.getElementById("t");
+let c=0;
+i.oninput=()=>localStorage.setItem("overlayLive",i.value);
+i.onkeydown=e=>{
+ if(e.key==="Enter"){
+  e.preventDefault();
+  const txt=i.value.trim();
+  if(!txt)return;
+  localStorage.setItem("overlaySend",txt+"#"+(++c));
+  localStorage.setItem("overlaySend",txt);
+  i.value="";
+  localStorage.setItem("overlayLive","");
+ }
+}
+</script></body></html>

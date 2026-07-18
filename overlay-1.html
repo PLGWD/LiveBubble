@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><title>Overlay</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#00ff00;font-family:Arial}
+#wrap{position:absolute;left:24px;bottom:24px;display:flex;flex-direction:column-reverse;gap:12px;max-width:700px}
+.msg{background:#fff;border-radius:28px;padding:14px 20px;font-size:32px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.25);transform-origin:left bottom;animation:in .2s}
+.live{opacity:.9}
+.hide{animation:out .5s forwards}
+@keyframes in{from{opacity:0;transform:translateY(10px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes out{to{opacity:0;transform:translateY(20px) scale(.85)}}
+</style></head><body><div id="wrap"></div>
+<script>
+const wrap=document.getElementById('wrap');
+let live=null,last="";
+setInterval(()=>{
+ const l=localStorage.getItem("overlayLive")||"";
+ const s=localStorage.getItem("overlaySend")||"";
+ if(l){
+   if(!live){live=document.createElement("div");live.className="msg live";wrap.prepend(live);}
+   live.textContent=l;
+ }else if(live){live.remove();live=null;}
+ if(s && s!==last){
+   last=s;
+   const d=document.createElement("div");
+   d.className="msg";
+   d.textContent=s;
+   wrap.prepend(d);
+   setTimeout(()=>{d.classList.add("hide");setTimeout(()=>d.remove(),500)},10000
+  );
+ }
+},50);
+</script></body></html>
